@@ -12,7 +12,7 @@ public class Venda {
     private List<ItemVenda> produtos;
 
     // NOVO: campo para armazenar a data do pedido
-    private LocalDateTime dataPedido;
+    private LocalDateTime data_Pedido;
 
     public Venda() {
     }
@@ -51,11 +51,11 @@ public class Venda {
 
     // NOVO: getter para dataPedido
     public LocalDateTime getDataPedido() {
-        return dataPedido;
+        return data_Pedido;
     }
 
-    // NOVO: setter para dataPedido
-    public void setDataPedido(LocalDateTime dataPedido) {
-        this.dataPedido = dataPedido;
+    // NOVO: setter para data_Pedido
+    public void setDataPedido(LocalDateTime data_Pedido) {
+        this.data_Pedido = data_Pedido;
     }
 }

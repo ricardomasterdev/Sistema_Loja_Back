@@ -1,4 +1,3 @@
-// src/main/java/br/com/sigeploja/controller/VendaController.java
 package br.com.sigeploja.controller;
 
 import br.com.sigeploja.model.Venda;
@@ -9,8 +8,10 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/vendas")
@@ -74,5 +75,17 @@ public class VendaController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/total-dia")
+    @Operation(summary = "Obter total de vendas do dia")
+    public ResponseEntity<Map<String, BigDecimal>> totalDoDia() {
+        BigDecimal total = service.getTotalVendasDoDia();
+        return ResponseEntity.ok(Map.of("total", total));
+    }
 
+    @GetMapping("/total-mes")
+    @Operation(summary = "Obter total de vendas do mês")
+    public ResponseEntity<Map<String, BigDecimal>> totalDoMes() {
+        BigDecimal total = service.getTotalVendasDoMes();
+        return ResponseEntity.ok(Map.of("total", total));
+    }
 }

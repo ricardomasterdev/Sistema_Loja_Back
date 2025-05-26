@@ -1,6 +1,8 @@
 package br.com.sigeploja.service;
 
 import br.com.sigeploja.model.Venda;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface VendaService {
@@ -18,4 +20,14 @@ public interface VendaService {
     void atualizar(Integer id, Venda venda);
 
     void deletar(Integer id);
+
+    /**
+     * Retorna o valor total de vendas realizadas no dia atual.
+     */
+    BigDecimal getTotalVendasDoDia();
+
+    /**
+     * Retorna o valor total de vendas realizadas no mês atual.
+     */
+    BigDecimal getTotalVendasDoMes();
 }
