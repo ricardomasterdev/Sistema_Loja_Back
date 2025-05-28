@@ -15,8 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/vendas")
-@CrossOrigin(origins = "*", allowedHeaders = "*",
-        methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
+@CrossOrigin
 public class VendaController {
 
     private final VendaService service;
