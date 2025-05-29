@@ -59,7 +59,9 @@ public class VendaServiceImpl implements VendaService {
 
         ajustarEstoque(existente.getProdutos(), +1);
         vendaRepository.deleteItensByVendaId(id);
-        vendaRepository.updateVenda(id, venda.getCliente(), venda.getValorTotal());
+
+        // ✅ AJUSTE: agora o método updateVenda aceita dataPedido também
+        vendaRepository.updateVenda(id, venda.getCliente(), venda.getValorTotal(), venda.getDataPedido());
 
         validarItens(venda);
         for (ItemVenda item : venda.getProdutos()) {

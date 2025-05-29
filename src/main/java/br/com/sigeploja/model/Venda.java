@@ -1,9 +1,8 @@
 package br.com.sigeploja.model;
 
 import java.math.BigDecimal;
-import java.util.List;
-// NOVO: import para o tipo de data
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Venda {
     private Integer id;
@@ -11,8 +10,8 @@ public class Venda {
     private BigDecimal valorTotal;
     private List<ItemVenda> produtos;
 
-    // NOVO: campo para armazenar a data do pedido
-    private LocalDateTime data_Pedido;
+    // ✅ Corrigido: nome padronizado conforme getter/setter
+    private LocalDateTime dataPedido;
 
     public Venda() {
     }
@@ -49,13 +48,11 @@ public class Venda {
         this.produtos = produtos;
     }
 
-    // NOVO: getter para dataPedido
     public LocalDateTime getDataPedido() {
-        return data_Pedido;
+        return dataPedido;
     }
 
-    // NOVO: setter para data_Pedido
-    public void setDataPedido(LocalDateTime data_Pedido) {
-        this.data_Pedido = data_Pedido;
+    public void setDataPedido(LocalDateTime dataPedido) {
+        this.dataPedido = dataPedido;
     }
 }
