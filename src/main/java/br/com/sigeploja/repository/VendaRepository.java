@@ -24,7 +24,7 @@ public class VendaRepository {
     }
 
     public List<Venda> findAll() {
-        String sql = "SELECT * FROM venda";
+        String sql = "SELECT * FROM venda order by id DESC";
         return jdbc.query(sql, this::mapVenda);
     }
 
