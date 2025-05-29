@@ -9,8 +9,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +24,7 @@ public class VendaRepository {
     }
 
     public List<Venda> findAll() {
-        String sql = "SELECT * FROM venda order by id DESC";
+        String sql = "SELECT * FROM venda ORDER BY id DESC";
         return jdbc.query(sql, this::mapVenda);
     }
 
@@ -35,13 +35,15 @@ public class VendaRepository {
     }
 
     public Venda save(Venda venda) {
-        String sql = "INSERT INTO venda (cliente, valor_total, data_pedido) VALUES (?, ?, getdate())";
+        // ✅ Gravar data enviada no JSON (venda.getDataPedido()), e não getdate()
+        String sql = "INSERT INTO venda (cliente, valor_total, data_pedido) VALUES (?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbc.update(con -> {
-            var ps = con.prepareStatement(sql, new String[]{"id"});
+            PreparedStatement ps = con.prepareStatement(sql, new String[]{"id"});
             ps.setString(1, venda.getCliente());
             ps.setBigDecimal(2, venda.getValorTotal());
+            ps.setTimestamp(3, Timestamp.valueOf(venda.getDataPedido())); // <-- usa a data correta
             return ps;
         }, keyHolder);
 
@@ -53,9 +55,10 @@ public class VendaRepository {
         return venda;
     }
 
-    public void updateVenda(Integer id, String cliente, BigDecimal valorTotal) {
-        String sql = "UPDATE venda SET cliente = ?, valor_total = ? WHERE id = ?";
-        jdbc.update(sql, cliente, valorTotal, id);
+    // ✅ Novo método updateVenda com dataPedido
+    public void updateVenda(Integer id, String cliente, BigDecimal valorTotal, LocalDateTime dataPedido) {
+        String sql = "UPDATE venda SET cliente = ?, valor_total = ?, data_pedido = ? WHERE id = ?";
+        jdbc.update(sql, cliente, valorTotal, Timestamp.valueOf(dataPedido), id);
     }
 
     public void deleteById(Integer id) {
@@ -94,8 +97,8 @@ public class VendaRepository {
         v.setId(rs.getInt("id"));
         v.setCliente(rs.getString("cliente"));
         v.setValorTotal(rs.getBigDecimal("valor_total"));
-        v.setProdutos(buscarItensPorVenda(rs.getInt("id")));
         v.setDataPedido(rs.getTimestamp("data_pedido").toLocalDateTime());
+        v.setProdutos(buscarItensPorVenda(rs.getInt("id")));
         return v;
     }
 
