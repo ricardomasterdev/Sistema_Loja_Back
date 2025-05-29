@@ -38,6 +38,16 @@ public class VendaServiceImpl implements VendaService {
         validarItens(venda);
         calcularTotalEVender(venda);
         Venda criada = vendaRepository.save(venda);
+
+        for (ItemVenda item : venda.getProdutos()) {
+            vendaRepository.insertItem(
+                    criada.getId(),
+                    item.getProdutoId(),
+                    item.getQuantidade(),
+                    item.getValorUnitario()
+            );
+        }
+
         ajustarEstoque(criada.getProdutos(), -1);
         return criada;
     }
