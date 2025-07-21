@@ -1,4 +1,4 @@
-# 📱 Sistema de Controle de Vendas e Estoque (Loja SIGEP)
+# 📱 Sistema de Controle de Vendas e Estoque
 
 ---
 
